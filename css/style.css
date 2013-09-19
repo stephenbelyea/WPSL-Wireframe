@@ -22,7 +22,7 @@ html, body{
 		#wrapper .body{
 			width: 100%;
 			position: relative;
-			top: 51px;
+			top: 5.18em;
 			z-index: 200;
 		}
 		#wrapper .body.fixed{
@@ -46,12 +46,13 @@ html, body{
 			z-index: 1200;
 		}
 			.sec-wrap{
-				width: 60em;
+				max-width: 1500px;
+				width: 100%;
 				min-height: 15em;
 				display: block;
 				margin: 0 auto;
-				border-right: dashed 1px #9C9C9C;
-				border-left: dashed 1px #9C9C9C;
+				/*border-right: dashed 1px #9C9C9C;
+				border-left: dashed 1px #9C9C9C;*/
 			}
 			.navigation .sec-wrap{
 				overflow: auto;
@@ -59,7 +60,7 @@ html, body{
 			}
 				.main-logo{
 					width: 20%;
-					padding: 1em 5%;
+					padding: 2em 5%;
 					float: left;
 				}
 					.main-logo .logo{
@@ -68,7 +69,7 @@ html, body{
 					}
 				.main-nav{
 					width: 60%;
-					padding: 1.1em 5%;
+					padding: 2.1em 5%;
 					float: right;
 				}
 					.main-nav nav, .main-nav ul{
@@ -86,12 +87,12 @@ html, body{
 			.events .sec-wrap{
 				overflow-x: hidden;
 				position: relative;
-				height: 15em;
+				height: 20em;
 			}
 				.event{
 					width: 90%;
 					height: 9em;
-					padding: 3em 5%;
+					padding: 6em 5% 5em;
 					position: absolute;
 					top: 0;
 				}
@@ -130,7 +131,7 @@ html, body{
 			}
 				.qu-cont{
 					width: 90%;
-					padding: 5em 5%;
+					padding: 9em 5%;
 					line-height: 160%;
 				}
 					.qu-text{

@@ -19,6 +19,7 @@ $(document).ready(function(){
 	var scrollNum = 0;
 	var scrollAdj = 0;
 
+	var $quoCon = $('.qu-cont');
 	var $quoImg = $('.qu-img');
 	var $quoAtt = $('.qu-attr');
 	var $dldBg  = $('.dl-bg');
@@ -61,6 +62,14 @@ $(document).ready(function(){
 		console.log(scrollAdj);
 		var scrollCur = scrollNum - scrollAdj;
 		if( !topLat ){
+			$quoCon.css({
+				padding: function(){
+					var pad = 144-scrollCur*0.3;
+					if( pad > 144 ){ pad = 144; }
+					else if( pad < 35 ){ pad = 35;}
+					return pad + 'px 5%';
+				}
+			});
 			$quoImg.css({
 				right: scrollCur*0.15+50
 			}).addClass('show');
@@ -68,12 +77,12 @@ $(document).ready(function(){
 				left: scrollCur*0.2
 			});
 			$dldBg.css({
-				opacity: scrollCur*0.002
+				opacity: scrollCur*0.0015
 			});
 			$dldCon.css({
 				padding: function(){
 					var pad = scrollCur*0.2+80;
-					if( pad > 195 ){ pad = 195; }
+					if( pad > 220 ){ pad = 220; }
 					else if( pad < 80 ){ pad = 80;}
 					return pad + 'px 5%';
 				}
