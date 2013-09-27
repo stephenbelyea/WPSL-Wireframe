@@ -1,175 +1,117 @@
 $(document).ready(function(){
-	var $bodyCl = $('#wrapper .body');
-	var bodyTop = $bodyCl.offset().top;
-	$bodyCl.addClass('fixed');
-
-	var $secAll = $('section'); 
-	var $secNav = $('section.navigation');
-	var $secEve = $('section.events');
-
-	var $eveOne = $('.event.ev-1');
-	var $eveTwo = $('.event.ev-2');
-	var $eveThr = $('.event.ev-3');
-	var eveWide = $('.events .sec-wrap').width();
-	var leftOne = 0;
-	var leftTwo = eveWide;
-	var leftThr = eveWide*2.1;
-	var posThr = 0;
-	var topLat = true;
-	var scrollNum = 0;
-	var scrollAdj = 0;
-
+	var $win = $(window);
+	var $wra = $('#wrapper');
+	var $nav = $('.navigation');
+	var $bod = $('.body');
+	var $quo = $('.quote');
+	var $secEv = $('.events .sec-wrap');
+	var $evOne = $('.event.ev-1');
+	var $evTwo = $('.event.ev-2');
+	var $evThr = $('.event.ev-3');
+	var $secQu = $('.quote .sec-wrap');
+	var $ripTwo = $('.rip.rip-2');
+	var $ripPad = $('.qu-pad');
 	var $quoCon = $('.qu-cont');
-	var $quoImg = $('.qu-img');
-	var $quoAtt = $('.qu-attr');
-	var $dldBg  = $('.dl-bg');
-	var $dldCon = $('.dl-cont');
+	var $dldBg = $('.dl-bg');
 
-	var $kdShpOne = $('.kd-shape-1');
-	var $kdShpTwo = $('.kd-shape-2');
-	var $kdShpThr = $('.kd-shape-3');
+	var navHigh = $nav.height();
+	var winHigh = $win.height();
+	var oldHigh = $quo.height();
+	var addTop  = navHigh * 4;
 
-	var $tnShpOne = $('.tn-shape-1');
-	var $tnShpTwo = $('.tn-shape-2');
-	var $tnShpThr = $('.tn-shape-3');
+	var scr = 0;
+	var adjScr = 0;
+	var doQuo = false;
 
-	function scrollNum(){
-		return $(window).scrollTop();
+	function doScroll(){
+		scr = $win.scrollTop();
+		// Set .quote section boolean.
+		if(scr>addTop){ doQuo = true; }
+		else{ doQuo = false; }
+		return scr;
 	};
-	function eventSlide(scrollNum){
-		posThr = leftThr - scrollNum*0.88;
-		if( posThr > -10 ){
-			if( topLat == false ){
-				$bodyCl.addClass('fixed').css({
-					top: bodyTop
-				});
-			}
-			$eveOne.css({
-				left: leftOne - scrollNum*0.7
-			});
-			$eveTwo.css({
-				left: leftTwo - scrollNum*0.8
-			});
-			$eveThr.css({
-				left: posThr
-			});
-			topLat = true;
-			scrollAdj = 0;
-		}
-		else{
-			if( topLat == true ){
-				$bodyCl.removeClass('fixed').css({
-					top: scrollNum + bodyTop
-				});
-				scrollAdj = scrollNum;
-			}
-			topLat = false;
-		}
+
+	function fixEvents(){
+		$secEv.addClass('fix').css({
+			top		: navHigh
+		});
+		addTop = navHigh * 4;
+		oldHigh = $quo.height();
+		$quo.css({
+			height	: (oldHigh+(addTop*0.3))
+		});
+		$secQu.css({
+			top 	: addTop
+		});
 	};
-	function quoteSec(scrollNum){
-		//console.log(scrollAdj);
-		var scrollCur = scrollNum - scrollAdj;
-		if( !topLat ){
+
+	function setDims(){
+		$bod.css({
+			top 	: navHigh,
+			height 	: (winHigh - navHigh)
+		});
+		fixEvents();
+	};
+
+	function moveOnScr(scr){
+		// Events section
+		$evTwo.css({
+			left : function(){
+				var left = (scr*-0.25)+100;
+				if( left < 36 ){ left = 36; }
+				return left + '%';
+			}
+		});
+		$evThr.css({
+			left : function(){
+				var left = (scr*-0.25)+164;
+				if( left < 36 ){ left = 36; }
+				return left + '%';
+			}
+		});
+		// Start of quote section
+		if( doQuo ){
+			// Quote elements
+			adjScr = scr-addTop;
+			$ripTwo.css({
+				top 	: function(){
+					var top = (adjScr*0.12)-100;
+					if( top > 50 ){ top = 50; }
+					return top + 'px';
+				}
+			});
+			$ripPad.css({
+				height	: function(){
+					var high = 260-(adjScr*0.18);
+					return high + 'px';
+				}
+			});
 			$quoCon.css({
-				padding: function(){
-					var pad = 144-scrollCur*0.3;
-					if( pad > 144 ){ pad = 144; }
-					else if( pad < 20 ){ pad = 20;}
-					return pad + 'px 5%';
+				'padding-top': function(){
+					var pad = adjScr*0.06;
+					return pad + 'px';
 				}
 			});
-			$quoImg.css({
-				right: scrollCur*0.15+50
-			}).addClass('show');
-			$quoAtt.css({
-				left: scrollCur*0.2
-			});
+			// Downloads elements
 			$dldBg.css({
-				opacity: scrollCur*0.0015
-			});
-			$dldCon.css({
-				padding: function(){
-					var pad = scrollCur*0.2+80;
-					if( pad > 220 ){ pad = 220; }
-					else if( pad < 80 ){ pad = 80;}
-					return pad + 'px 5%';
+				opacity : function(){
+					var op = adjScr*0.0008;
+					if( op > 1 ){ op = 1; }
+					return op;
 				}
 			});
-		}
-		else{
-			$quoImg.removeClass('show');
-		}
-	};
-	function kidSec(scrollNum){
-		var scrollCur = scrollNum - scrollAdj;
-		if( !topLat ){
-			$kdShpOne.css({
-				top: function(){
-					var top = 85 - scrollCur*0.04;
-					if( top > 85 ){ top = 85; }
-					else if( top < 10 ){ top = 10; }
-					return top + '%';
-				}
-			});
-			$kdShpTwo.css({
-				top: function(){
-					var top = 105 - scrollCur*0.085;
-					if( top > 105 ){ top = 105; }
-					else if( top < -40 ){ top = -40; }
-					return top + '%';
-				}
-			});
-			$kdShpThr.css({
-				top: function(){
-					var top = 120 - scrollCur*0.14;
-					if( top > 120 ){ top = 120; }
-					else if( top < -90 ){ top = -90; }
-					return top + '%';
-				}
-			});
-		}
-		else{
-			
-		}
-	};
-	function teenSec(scrollNum){
-		var scrollCur = scrollNum - scrollAdj;
-		if( !topLat ){
-			$tnShpOne.css({
-				top: function(){
-					var top = 110 - scrollCur*0.04;
-					if( top > 110 ){ top = 110; }
-					else if( top < 10 ){ top = 10; }
-					return top + '%';
-				}
-			});
-			$tnShpTwo.css({
-				top: function(){
-					var top = 140 - scrollCur*0.085;
-					if( top > 140 ){ top = 140; }
-					else if( top < -40 ){ top = -40; }
-					return top + '%';
-				}
-			});
-			$tnShpThr.css({
-				top: function(){
-					var top = 160 - scrollCur*0.14;
-					if( top > 160 ){ top = 160; }
-					else if( top < -90 ){ top = -90; }
-					return top + '%';
-				}
-			});
-		}
-		else{
-			
 		}
 	};
 
-	$(window).on('scroll',function(){
-		scrollNum = $(window).scrollTop();
-		eventSlide(scrollNum);
-		quoteSec(scrollNum);
-		kidSec(scrollNum);
-		teenSec(scrollNum);
+	setDims();
+	$win.resize(function(){
+		navHigh = $nav.height();
+		winHigh = $win.height();
+		setDims();
+	});
+	$win.on('scroll',function(){
+		var scr = doScroll();
+		console.log(scr);
+		moveOnScr(scr);
 	});
 });
