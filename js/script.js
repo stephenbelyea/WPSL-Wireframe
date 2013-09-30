@@ -4,15 +4,6 @@ $(document).ready(function(){
 	var $nav = $('.navigation');
 	var $bod = $('.body');
 	var $quo = $('.quote');
-	var $secEv = $('.events .sec-wrap');
-	var $evOne = $('.event.ev-1');
-	var $evTwo = $('.event.ev-2');
-	var $evThr = $('.event.ev-3');
-	var $secQu = $('.quote .sec-wrap');
-	var $ripTwo = $('.rip.rip-2');
-	var $ripPad = $('.qu-pad');
-	var $quoCon = $('.qu-cont');
-	var $dldBg = $('.dl-bg');
 
 	var navHigh = $nav.height();
 	var winHigh = $win.height();
@@ -21,26 +12,33 @@ $(document).ready(function(){
 
 	var scr = 0;
 	var adjScr = 0;
+	var adjScrKid = 0;
 	var doQuo = false;
+	var doKid = false;
+	var rotImg = 0;
 
 	function doScroll(){
 		scr = $win.scrollTop();
-		// Set .quote section boolean.
+		// Set .quote section boolean
 		if(scr>addTop){ doQuo = true; }
 		else{ doQuo = false; }
+		// Set .kids section boolean
+		if(scr>addTop*3){ doKid = true; }
+		else{ doKid = false; }
+		// Return current scroll position
 		return scr;
 	};
 
 	function fixEvents(){
-		$secEv.addClass('fix').css({
+		$('.events .sec-wrap').addClass('fix').css({
 			top		: navHigh
 		});
 		addTop = navHigh * 4;
 		oldHigh = $quo.height();
 		$quo.css({
-			height	: (oldHigh+(addTop*0.3))
+			height	: (oldHigh+(addTop*0.15))
 		});
-		$secQu.css({
+		$('.quote .sec-wrap').css({
 			top 	: addTop
 		});
 	};
@@ -55,14 +53,14 @@ $(document).ready(function(){
 
 	function moveOnScr(scr){
 		// Events section
-		$evTwo.css({
+		$('.event.ev-2').css({
 			left : function(){
 				var left = (scr*-0.25)+100;
 				if( left < 36 ){ left = 36; }
 				return left + '%';
 			}
 		});
-		$evThr.css({
+		$('.event.ev-3').css({
 			left : function(){
 				var left = (scr*-0.25)+164;
 				if( left < 36 ){ left = 36; }
@@ -73,31 +71,88 @@ $(document).ready(function(){
 		if( doQuo ){
 			// Quote elements
 			adjScr = scr-addTop;
-			$ripTwo.css({
+			$('.quote .rip.rip-2').css({
 				top 	: function(){
 					var top = (adjScr*0.12)-100;
 					if( top > 50 ){ top = 50; }
 					return top + 'px';
 				}
 			});
-			$ripPad.css({
+			$('.qu-pad').css({
 				height	: function(){
 					var high = 260-(adjScr*0.18);
 					return high + 'px';
 				}
 			});
-			$quoCon.css({
+			$('.qu-cont').css({
 				'padding-top': function(){
 					var pad = adjScr*0.06;
 					return pad + 'px';
 				}
 			});
 			// Downloads elements
-			$dldBg.css({
+			$('.dl-bg').css({
 				opacity : function(){
 					var op = adjScr*0.0008;
 					if( op > 1 ){ op = 1; }
 					return op;
+				}
+			});
+			$('.dl-fir').css({
+				'margin-top': function(){
+					var top = adjScr*0.12;
+					return top + 'px';
+				}
+			});
+			rotImg = adjScr*0.015;
+			$('.dl-img').css({
+				'-webkit-transform' : 'rotate('+ rotImg +'deg)',
+                '-moz-transform' : 'rotate('+ rotImg +'deg)',
+                '-ms-transform' : 'rotate('+ rotImg +'deg)',
+                'transform' : 'rotate('+ rotImg +'deg)'
+			});
+		}
+		// Start of Kids section
+		if( doKid ){
+			// .kids elements
+			adjScrKid = scr-addTop*3;
+			$('.kd-fir').css({
+				'margin-top': function(){
+					var top = adjScrKid*0.12;
+					return top + 'px';
+				}
+			});
+			$('.bub-01').css({
+				top : function(){
+					var top = 80-adjScrKid*0.015;
+					return top + '%';
+				}
+			});
+			$('.bub-02').css({
+				top : function(){
+					var top = 80-adjScrKid*0.04;
+					return top + '%';
+				}
+			});
+			$('.bub-03').css({
+				top : function(){
+					var top = 110-adjScrKid*0.102;
+					return top + '%';
+				}
+			});
+			// .teens elements
+			$('.teens .rip-1').css({
+				top : function(){
+					var top = (220-(adjScrKid*-0.035))* -1;
+					if( top < -280 ){ top = -280; }
+					return top + 'px';
+				}
+			});
+			$('.teens .rip-2').css({
+				top : function(){
+					var top = (adjScrKid*0.025)-280;
+					if( top > -242 ){ top = -242; }
+					return top + 'px';
 				}
 			});
 		}
@@ -110,8 +165,6 @@ $(document).ready(function(){
 		setDims();
 	});
 	$win.on('scroll',function(){
-		var scr = doScroll();
-		console.log(scr);
-		moveOnScr(scr);
+		moveOnScr(doScroll());
 	});
 });
