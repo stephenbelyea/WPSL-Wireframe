@@ -1,0 +1,42 @@
+.event .dissolve{
+	background-repeat: no-repeat;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/event-gradient.png',
+	sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/event-gradient.png',
+	sizingMethod='scale')";
+}
+.quote .rip-3.rip{
+	height: 460px;
+}
+.downloads .sec-wrap{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/library-ext.jpg',
+	sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/library-ext.jpg',
+	sizingMethod='scale')";
+}
+.dl-bg{
+	background: url('../images/dld-bg.png') repeat;
+}
+.dl-cont{
+	top: 36%;
+}
+.kids .sec-wrap{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/kids-bg.jpg',
+	sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/kids-bg.jpg',
+	sizingMethod='scale')";
+}
+.teens .sec-wrap{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/teens-bg.jpg',
+	sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+	src='images/teens-bg.jpg',
+	sizingMethod='scale')";
+}
